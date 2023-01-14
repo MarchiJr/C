@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <ctype.h>
+
+#define qtdAluno 3
+#define tamGab 20
+int main()
+{
+	//começo da entrada de dados
+	char gabarito[tamGab], nomeAluno[qtdAluno][50], gabAluno[qtdAluno][tamGab];
+	int lin, col, notaMaior = 0, notaMenor = 0;
+	float nota[50] = {0}, media = 0;
+	
+	for(lin = 0; lin < tamGab; lin++)
+	{
+		printf("\n escreva o gabarito(em caractere) da questao %d: ", lin+1);
+		gabarito[lin] = tolower(getche());//INSERÇÃO DA RESPOSTA DO PROFESSOR GABARITO
+	}
+	for(lin = 0; lin < qtdAluno; lin++)
+	{
+		system("cls");
+		printf("insira o nome do %dº aluno: ", lin+1);
+		gets(nomeAluno[lin]);//INSERÇÃO DO NOME DO ALUNO
+		fflush(stdin);
+		for(col = 0; col < tamGab; col++)
+		{
+			printf("\n escreva o gabarito do aluno(em caractere) da questao %d: ",col+1);
+			gabAluno[lin][col] = tolower(getche());//INSERÇÃO DA RESPOSTA DO ALUNO GABARITO
+		}
+	}
+	//FIM DA ENTRADA DE DADOS
+	//COMEÇO DO PROCESSAMENTO DE DADOS
+	for(lin = 0; lin < qtdAluno; lin++)
+	{
+		for(col = 0; col < tamGab; col++)
+		{
+			if(gabAluno[lin][col] == gabarito[col])//VERIFICA SE O GABARITO DO ALUNO TA IGUAL AO DO PROFESSOR
+			{
+				nota[lin] += 0.5;//ATRIBUIÇÃO DE NOTA AO ALUNO
+			}
+		}
+		if(nota[lin] > nota[notaMaior])//VERIFICA SE A NOTA DO ALUNO É A MAIOR NOTA
+		{
+			notaMaior = lin;
+		}
+		if(nota[lin] < nota[notaMenor])//VERIFICA SE A NOTA DO ALUNO É A MENOR NOTA
+		{
+			notaMenor = lin;
+		}
+		media += nota[lin];//ATRIBUI A NOTA AO VALOR DA VARIAVEL MEDIA
+	}
+	media /= qtdAluno;//CALCULA O VALOR DA MEDIA
+	//fim do processamento de dados
+	//inicio da saida de dados
+	system("cls");
+	for(lin = 0; lin < qtdAluno; lin++)
+	{MOSTRA A NOTA DE TODOS OS ALUNOS
+		printf("\n----------------------------------------------------------------------------------\n");
+		printf("%s tirou %.2f pontos na prova\n", nomeAluno[lin], nota[lin]);
+	}MOSTRA A MAIOR/MENOR/MEDIA DA NOTA DA SALA 
+	printf("\n----------------------------------------------------------------------------------\n");
+	printf("a maior nota foi do aluno %s com seus %2.2f pontos\n", nomeAluno[notaMaior], nota[notaMaior]);
+	printf("\n----------------------------------------------------------------------------------\n");
+	printf("a menor nota foi do aluno %s com seus %2.2f pontos\n", nomeAluno[notaMenor], nota[notaMenor]);
+	printf("\n----------------------------------------------------------------------------------\n");
+	printf("a media de nota da turma foi de %2.2f\n", media);
+	printf("\n----------------------------------------------------------------------------------\n");
+}
